@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Form, useField } from 'formik'
 import * as Yup from 'yup'
+import ErrorMessage from '../components/ErrorMessage'
 
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
@@ -94,6 +95,7 @@ const MySelect = ({ label, ...props }) => {
 
 const FormResources = () => {
     return(
+        
         <Formik
             initialValues={{ 
                 title: '', 
@@ -142,8 +144,8 @@ const FormResources = () => {
                 setSubmitting(false);
                 }, 400);
             }}
-
             >
+                
             {formik => (
                 <Form onSubmit={formik.handleSubmit}>
                     <div className="pb-8 mx-10">
@@ -227,7 +229,7 @@ const FormResources = () => {
                     </div>
 
                     <div className="m-10">
-                        <button type="submit" className="text-white bg-indigo-400 active:borde-none border-indigo-600 p-4 font-alegreya-sans text-xl border-b-4  transition duration-300 md:text-2xl rounded-lg w-full hover:bg-indigo-600 hover:border-indigo-400 shadow-lg focus:outline-none">
+                        <button type="submit" className="text-white bg-indigo-400 active:borde-none border-indigo-600 p-4 font-alegreya-sans text-xl border-b-4  transition ease-in-out duration-700  md:text-2xl rounded-lg w-full hover:bg-indigo-600 hover:border-indigo-400 shadow-lg focus:outline-none">
                             Cadastar
                         </button>
                     </div>
