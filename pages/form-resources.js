@@ -98,9 +98,13 @@ const FormResources = () => {
             initialValues={{ 
                 title: '', 
                 description: '',
-                type: '',
+                types: '',
                 link: '',
                 teacher: '',
+                subjects: '',
+                grades: '',
+                institutions: '',
+                syllabus: '',
             }}
             validationSchema={Yup.object({
                 title: Yup.string()
@@ -109,13 +113,28 @@ const FormResources = () => {
                 description: Yup.string()
                     .max(200, 'Máximo de 200 caracteres')
                     .required('Descrição é Obrigatório!'),
-                type: Yup.string()
+                types: Yup.string()
                     .oneOf(['Video', 'PDF via Google Drive'],'Tipo Inválido!')
                     .required('Tipo de Recurso Inválido!'),
                 link: Yup.string()
                     .max(500, 'Máximo de 500 caracteres')
                     .matches(/^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i, 'URL Inválida!')
                     .required('Link é Obrigatório!'),
+                teacher: Yup.string()
+                    .max(100, 'Máximo de 100 caracteres')
+                    .required('Professora/o é Obrigatório!'),
+                subjects: Yup.string()
+                    .oneOf(['Língua Portuguesa', 'Matemática'],'Disciplina Inválida!')
+                    .required('Disciplina Inválida!'),
+                grades: Yup.string()
+                    .oneOf(['1º Ano', '2º Ano', '3º Ano', '4º Ano', '5º Ano'],'Série Inválida!')
+                    .required('Série Inválida!'),
+                institutions: Yup.string()
+                    .oneOf(['EM São José', 'EM São Pedro'],'Unidade Inválida!')
+                    .required('Unidade Inválida!'),
+                syllabus: Yup.string()
+                    .max(150, 'Máximo de 150 caracteres')
+                    .required('Conteúdo é Obrigatório!'),
             })}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
@@ -132,7 +151,7 @@ const FormResources = () => {
                             label="Título"
                             name="title"
                             type="text"
-                            placeholder="Insira aqui o título do recurso"
+                            placeholder="Insira o título do recurso"
                         />  
                     </div>
 
@@ -141,12 +160,12 @@ const FormResources = () => {
                             label="Descrição"
                             name="description"
                             type="text"
-                            placeholder="Insira aqui a descrição do recurso"
+                            placeholder="Insira a descrição do recurso"
                         />  
                     </div>
 
                     <div className="pb-8 mx-10">
-                        <MySelect label="Tipo de Recurso" name="type">
+                        <MySelect label="Tipo de Recurso" name="types">
                             <option value="">Selecione o tipo de recurso</option>
                             <option value="Video">Video</option>
                             <option value="PDF via Google Drive">PDF via Google Drive</option>
@@ -158,7 +177,52 @@ const FormResources = () => {
                             label="Link"
                             name="link"
                             type="text"
-                            placeholder="Insira aqui o link do recurso"
+                            placeholder="Insira o link do recurso"
+                        />  
+                    </div>
+
+                    <div className="pb-8 mx-10">
+                        <MyTextInput
+                            label="Professora/o"
+                            name="teacher"
+                            type="text"
+                            placeholder="Insira o nome da professora responsável pelo recurso"
+                        />  
+                    </div>
+
+                    <div className="pb-8 mx-10">
+                        <MySelect label="Unidade" name="institutions">
+                            <option value="">Selecione o tipo de recurso</option>
+                            <option value="EM São José">EM São José</option>
+                            <option value="EM São Pedro">EM São Pedro</option>
+                        </MySelect>
+                    </div>
+
+                    <div className="pb-8 mx-10">
+                        <MySelect label="Série" name="grades">
+                            <option value="">Selecione a série</option>
+                            <option value="1º Ano">1º Ano</option>
+                            <option value="2º Ano">2º Ano</option>
+                            <option value="3º Ano">3º Ano</option>
+                            <option value="4º Ano">4º Ano</option>
+                            <option value="5º Ano">5º Ano</option>
+                        </MySelect>
+                    </div>
+
+                    <div className="pb-8 mx-10">
+                        <MySelect label="Disciplina" name="subjects">
+                            <option value="">Selecione a disciplina</option>
+                            <option value="Língua Portuguesa">Língua Portuguesa</option>
+                            <option value="Matemática">Matemática</option>
+                        </MySelect>
+                    </div>
+
+                    <div className="pb-8 mx-10">
+                        <MyTextInput
+                            label="Conteúdo"
+                            name="syllabus"
+                            type="text"
+                            placeholder="Insira o conteúdo do recurso"
                         />  
                     </div>
 
